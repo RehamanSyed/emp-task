@@ -1,10 +1,11 @@
 import fallbackimg from "../../public/avatarpic.jpg";
 import Image from "next/image";
 import { Button, IconButton, Tooltip } from "@mui/material";
-import { useEmpStore } from "../..";
+
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { useEmpStore } from "../../store";
 const EmployeeLists = ({
   modalOpenHandler,
   dialogeOpenHandler,

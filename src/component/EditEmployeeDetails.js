@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 
-import { useEmpStore, useStore } from "../..";
 import { useForm, Controller } from "react-hook-form";
 import fallbackimg from "../../public/avatarpic.jpg";
 import Image from "next/image";
 import { Close } from "@mui/icons-material";
 import { uploadFileToFolder } from "@/utils/uploadFile";
+import { useEmpStore } from "../../store";
 
 const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
   const empdata = useEmpStore((state) => state.singleEmpData);
@@ -127,6 +127,11 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
                 render={({ field }) => (
                   <TextField
                     fullWidth
+                    disabled
+                    readonly
+                    InputProps={{
+                      readOnly: true,
+                    }}
                     id="outlined-basic"
                     label="Employee Id"
                     variant="outlined"

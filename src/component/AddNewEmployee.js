@@ -1,8 +1,9 @@
 import { Alert, Box, Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { useEmpStore } from "../..";
+
 import { useForm, Controller } from "react-hook-form";
 import { uploadFileToFolder } from "@/utils/uploadFile";
+import { useEmpStore } from "../../store";
 
 const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
   const [error, setError] = useState(false);
