@@ -30,9 +30,6 @@ const EmployeeLists = ({
           <tbody>
             {empDatalist ? (
               empDatalist.map((item, idx) => {
-                console.log(
-                  `Prodic imager in list--> /uploads/${item.profile_image}`
-                );
                 return (
                   <tr key={idx}>
                     <td className="border px-2 py-1">{idx + 1}</td>

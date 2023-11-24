@@ -14,49 +14,49 @@ import errorImage from "../../public/server.png";
 import Image from "next/image";
 import { useEmpStore } from "../../store";
 
-export async function getStaticProps() {
-  try {
-    const response = await fetch(
-      "https://dummy.restapiexample.com/api/v1/employees"
-    );
+// export async function getStaticProps() {
+//   try {
+//     const response = await fetch(
+//       "https://dummy.restapiexample.com/api/v1/employees"
+//     );
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data. Status: ${response.status}`);
-    }
-    const data = await response.json();
-    return {
-      props: { data: empList },
-    };
-  } catch (error) {
-    console.error("Error fetching data", error.message);
-    if (error.response && error.response.status === 429) {
-      return {
-        props: {
-          data: null,
-          statusCode: 429,
-          error: "Too Many Request",
-        },
-      };
-    }
-    if (error.response && error.response.status === 500) {
-      return {
-        props: {
-          data: null,
-          statusCode: 500,
-          error: "Internal Server Error",
-        },
-      };
-    }
+//     if (!response.ok) {
+//       throw new Error(`Failed to fetch data. Status: ${response.status}`);
+//     }
+//     const data = await response.json();
+//     return {
+//       props: { data: empList },
+//     };
+//   } catch (error) {
+//     console.error("Error fetching data", error.message);
 
-    return {
-      props: {
-        data: null,
-        statusCode: 500,
-        error: "something went worng ",
-      },
-    };
-  }
-}
+//     if (error.response && error.response.status === 429) {
+//       return {
+//         props: {
+//           data: null,
+//           statusCode: 429,
+//           error: "Too Many Request",
+//         },
+//       };
+//     }
+//     if (error.response && error.response.status === 500) {
+//       return {
+//         props: {
+//           data: null,
+//           statusCode: 500,
+//           error: "Internal Server Error",
+//         },
+//       };
+//     }
+//     return {
+//       props: {
+//         data: null,
+//         statusCode: 500,
+//         error: "something went worng ",
+//       },
+//     };
+//   }
+// }
 
 export default function Home({ data }) {
   const storedActiveTab =
@@ -76,12 +76,6 @@ export default function Home({ data }) {
   const editEmployeeData = useEmpStore((state) => state.editEmployee);
   const deleteEmployeeData = useEmpStore((state) => state.deleteEmployee);
 
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
-  const dialogeOpenAddHandler = () => {
-    setOpen(true);
-  };
   const dialogeOpenHandler = (id) => {
     console.log("dialoge Open  Handler", id);
     setOpen(true);
@@ -107,14 +101,10 @@ export default function Home({ data }) {
   };
 
   useEffect(() => {
-    if (data) {
-      localStorage.setItem("empData", JSON.stringify(data));
-    }
-    // fetchData();
+    localStorage.setItem("empData", JSON.stringify(empList));
     allEmployeList();
   }, [isLoading]);
 
-  // Clear localStorage on component unmount
   useEffect(() => {
     return () => {
       localStorage.removeItem("activeTab");
@@ -149,8 +139,8 @@ export default function Home({ data }) {
     </div>
   ) : (
     <>
-      <Box p={5}>
-        <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
+      <div className="p-5">
+        <Tabs activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab)} />
         {activeTab === "add" && (
           <AddNewEmployee
             dialogeOpenHandler={dialogeOpenHandler}
@@ -165,7 +155,8 @@ export default function Home({ data }) {
             setOpenAddDia={setOpenAddDia}
           />
         )}
-      </Box>
+      </div>
+
       <Dialog
         open={open}
         onClose={dialogeCloseHandler}
@@ -213,7 +204,6 @@ export default function Home({ data }) {
           </DialogContent>
         )}
       </Dialog>
-
       <Modal open={openModal} onClose={modalCloseHandler}>
         <Box sx={modalStyle}>
           {editMode ? (

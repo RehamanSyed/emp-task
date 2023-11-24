@@ -9,11 +9,9 @@ export async function uploadFileToFolder(data) {
     });
 
     if (!response.ok) {
-      // Handle non-successful response
       throw new Error(`Failed to upload file. Status: ${response.status}`);
     }
     const responseData = await response.json();
-    console.log("Response data ---> function", responseData);
 
     return responseData;
   } catch (error) {

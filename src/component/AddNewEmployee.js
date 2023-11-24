@@ -28,7 +28,6 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
       const responseData = await uploadFileToFolder(data);
 
       console.log("Response data ******", responseData);
-
       if (!responseData.success) {
         setError(true);
       }
@@ -50,124 +49,121 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
     }
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
-      <Stack spacing={2}>
-        {error && error && <Alert severity="error">Please upload Image</Alert>}
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={3}>
+          {error && error && (
+            <Alert severity="error">Please upload Image</Alert>
+          )}
+          <label>
+            <input
+              type="file"
+              {...register("profile_image", {
+                required: "Image is required",
+              })}
+            />
+          </label>
+          {errors.profile_image && (
+            <p className="text-red-500 text-xs">
+              {errors.profile_image.message}
+            </p>
+          )}
 
-        <label>
-          <input
-            type="file"
-            {...register("profile_image", {
-              required: "Image is required",
-            })}
-          />
-        </label>
-        {errors.profile_image && (
-          <p className="text-red-500 text-xs">{errors.profile_image.message}</p>
-        )}
+          <Stack spacing={2}>
+            <Controller
+              name="employee_name"
+              control={control}
+              rules={{
+                required: "Name is required",
+                pattern: {
+                  value: /^[A-Za-z ]+$/,
+                  message: "Name should contain only alphabets",
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Employee Name"
+                  variant="outlined"
+                  {...field}
+                  error={Boolean(errors.employee_name)}
+                  helperText={errors.employee_name?.message}
+                />
+              )}
+            />
+          </Stack>
+          <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
+            <Controller
+              name="employee_age"
+              control={control}
+              rules={{
+                required: "Age  is required",
+                validate: (value) => {
+                  if (!Number.isInteger(Number(value))) {
+                    return "Age should be an integer";
+                  }
+                  if (Number(value) >= 100) {
+                    return "Age should not be greater than 100";
+                  }
+                  return true;
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Age"
+                  variant="outlined"
+                  error={Boolean(errors.employee_age)}
+                  helperText={errors.employee_age?.message}
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              name="employee_salary"
+              control={control}
+              rules={{
+                required: "Employe salary is required",
+                validate: (value) => {
+                  const isInteger = /^\d+$/.test(value);
+                  const isPositive = Number(value) > 0;
+                  if (!isInteger || !isPositive) {
+                    return "Salary should be a positive integer and not decimal number";
+                  }
+                  return true;
+                },
+              }}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  id="outlined-basic"
+                  label="Salary"
+                  variant="outlined"
+                  {...field}
+                  error={Boolean(errors.employee_salary)}
+                  helperText={errors.employee_salary?.message}
+                />
+              )}
+            />
+          </Stack>
 
-        <Stack spacing={2}>
-          <Controller
-            name="employee_name"
-            control={control}
-            rules={{
-              required: "Name is required",
-              pattern: {
-                value: /^[A-Za-z ]+$/,
-                message: "Name should contain only alphabets",
-              },
+          <Button
+            aria-label="add employee"
+            variant="contained"
+            type="submit"
+            sx={{
+              bgcolor: "#0e7490 !important",
+              textTransform: "capitalize",
             }}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                label="Employee Name"
-                variant="outlined"
-                {...field}
-                error={Boolean(errors.employee_name)}
-                helperText={errors.employee_name?.message}
-              />
-            )}
-          />
+          >
+            Add Employee
+          </Button>
         </Stack>
-        <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
-          <Controller
-            name="employee_age"
-            control={control}
-            rules={{
-              required: "Age  is required",
-              validate: (value) => {
-                if (!Number.isInteger(Number(value))) {
-                  return "Age should be an integer";
-                }
-                if (Number(value) >= 100) {
-                  return "Age should not be greater than 100";
-                }
-                return true;
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                label="Age"
-                variant="outlined"
-                error={Boolean(errors.employee_age)}
-                helperText={errors.employee_age?.message}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            name="employee_salary"
-            control={control}
-            rules={{
-              required: "Employe salary is required",
-              validate: (value) => {
-                const isInteger = /^\d+$/.test(value);
-                const isPositive = Number(value) > 0;
-
-                if (!isInteger || !isPositive) {
-                  return "Salary should be a positive integer and not decimal number";
-                }
-
-                return true;
-              },
-            }}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                id="outlined-basic"
-                label="Salary"
-                variant="outlined"
-                {...field}
-                error={Boolean(errors.employee_salary)}
-                helperText={errors.employee_salary?.message}
-              />
-            )}
-          />
-        </Stack>
-
-        <Button
-          aria-label="add employee"
-          variant="contained"
-          type="submit"
-          sx={{
-            bgcolor: "#0e7490 !important",
-            textTransform: "capitalize",
-          }}
-        >
-          Add Employee
-        </Button>
-      </Stack>
-    </form>
+      </form>
+    </div>
   );
 };
 
 export default AddNewEmployee;
-
-{
-  /* <div className="w-[100%]">
-<h1 className="font-bold mb-10 text-2xl">Add Employee</h1>
-</div> */
-}

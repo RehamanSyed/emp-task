@@ -22,7 +22,15 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
           px: 4,
         }}
       ></Box>
-      <Box sx={{ display: "flex", justifyContent: "start", p: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          justifyContent: "start",
+          alignItems: "end",
+          p: 4,
+        }}
+      >
         <Image
           src={
             empdata.profile_image
@@ -32,7 +40,7 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
           width={150}
           height={250}
           alt="profile image"
-          className="-mt-36 rounded-lg"
+          className="-mt-36 rounded-lg bg-white p-2 shadow-xl"
         />
       </Box>
       <Stack spacing={2}>

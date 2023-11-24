@@ -119,7 +119,6 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
                   <TextField
                     fullWidth
                     disabled
-                    readonly
                     InputProps={{
                       readOnly: true,
                     }}
