@@ -90,7 +90,7 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
             )}
           />
         </Stack>
-        <Stack spacing={2} direction={"row"}>
+        <Stack spacing={2} direction={{ xs: "column", sm: "row" }}>
           <Controller
             name="employee_age"
             control={control}

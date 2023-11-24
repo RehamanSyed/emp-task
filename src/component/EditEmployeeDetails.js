@@ -120,7 +120,7 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
           </Box>
 
           <Stack spacing={2}>
-            <Stack direction="row" spacing={2} px={4}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} px={4}>
               <Controller
                 name="id"
                 control={control}
@@ -162,7 +162,7 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
                 )}
               />
             </Stack>
-            <Stack direction="row" spacing={2} px={4}>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} px={4}>
               <Controller
                 name="employee_age"
                 control={control}
