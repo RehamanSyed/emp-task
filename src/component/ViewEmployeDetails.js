@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 import fallbackimg from "../../public/avatarpic.jpg";
 import { Close } from "@mui/icons-material";
-import { useEmpStore } from "../..store";
+import { useEmpStore } from "../../store";
+
 const ViewEmployeDetails = ({ setOpenModal }) => {
   const empdata = useEmpStore((state) => state.singleEmpData);
 
