@@ -23,7 +23,6 @@ The Employment Management System allows users to perform CRUD (Create, Read, Upd
 - Multer (for image upload)
 - Zustand (v4.4.6)
 - TailwindCss (v3.3.0)
--
 
 ## Getting Started
 
@@ -39,3 +38,16 @@ The Employment Management System allows users to perform CRUD (Create, Read, Upd
    npm run dev
 
    ```
+
+## State Management
+
+- Zustand (v4.4.6)
+
+## API
+
+- https://dummy.restapiexample.com/api/v1/employees
+
+## UI Frameworks
+
+- Material UI Component Library
+- TailwindCss (v3.3.0)
