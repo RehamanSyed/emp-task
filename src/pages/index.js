@@ -9,10 +9,10 @@ import EditEmployeeDetails from "@/component/EditEmployeeDetails";
 import AddNewEmployee from "@/component/AddNewEmployee";
 import EmployeeLists from "@/component/EmployeeLists";
 import ViewEmployeDetails from "@/component/ViewEmployeDetails";
-import { useEmpStore } from "../..";
 
 import errorImage from "../../public/server.png";
 import Image from "next/image";
+import { useEmpStore } from "../../store";
 
 export async function getStaticProps() {
   try {
@@ -23,10 +23,7 @@ export async function getStaticProps() {
     if (!response.ok) {
       throw new Error(`Failed to fetch data. Status: ${response.status}`);
     }
-
     const data = await response.json();
-    // console.log("Data emp", response.json());
-
     return {
       props: { data: empList },
     };
@@ -50,7 +47,7 @@ export async function getStaticProps() {
         },
       };
     }
-    // console.error("Status Code:", error.response.status);
+
     return {
       props: {
         data: null,
@@ -62,7 +59,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ data }) {
-  console.log("Data in from get statpic pro[ps", data);
   const storedActiveTab =
     typeof window !== "undefined" ? localStorage.getItem("activeTab") : null;
   const [activeTab, setActiveTab] = useState(storedActiveTab || "view");

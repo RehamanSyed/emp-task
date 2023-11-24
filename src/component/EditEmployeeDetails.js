@@ -19,7 +19,6 @@ import { uploadFileToFolder } from "@/utils/uploadFile";
 
 const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
   const empdata = useEmpStore((state) => state.singleEmpData);
-  // console.log("Single emp data", empdata);
   const {
     control,
     handleSubmit,
@@ -209,7 +208,6 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
                     helperText={errors.employee_salary?.message}
                     {...field}
                   />
-                  // errors.employee_salary && <p>{errors.employee_salary.message}</p>
                 )}
               />
             </Stack>

@@ -1,16 +1,10 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
 import React from "react";
-import { useEmpStore } from "../..";
+
 import Image from "next/image";
 import fallbackimg from "../../public/avatarpic.jpg";
-import { Close, CloseFullscreen } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
+import { useEmpStore } from "../..store";
 const ViewEmployeDetails = ({ setOpenModal }) => {
   const empdata = useEmpStore((state) => state.singleEmpData);
 
