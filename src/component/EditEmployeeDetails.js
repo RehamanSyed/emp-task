@@ -75,16 +75,7 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
               alignItems: "end",
               px: 4,
             }}
-          >
-            <Typography
-              fontSize={24}
-              textAlign="right"
-              fontWeight="bold"
-              mb={2}
-            >
-              Edit Employee Details
-            </Typography>
-          </Box>
+          ></Box>
 
           <Box
             sx={{

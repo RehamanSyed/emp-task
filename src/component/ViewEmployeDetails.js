@@ -21,11 +21,7 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
           alignItems: "end",
           px: 4,
         }}
-      >
-        <Typography fontSize={24} textAlign="right" fontWeight="bold" mb={2}>
-          {empdata.employee_name} Details
-        </Typography>
-      </Box>
+      ></Box>
       <Box sx={{ display: "flex", justifyContent: "start", p: 4 }}>
         <Image
           src={

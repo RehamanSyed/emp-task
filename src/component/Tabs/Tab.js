@@ -14,7 +14,7 @@ const Tabs = ({ activeTab, onTabChange }) => {
   return (
     <Box className="flex space-x-4 -mt-20 mb-20">
       <Box
-        className={`py-2 px-4 text-sm gap-2 flex flex-col justify-center items-center rounded w-36 h-28 ${
+        className={`py-2 px-4 text-sm gap-2 flex flex-col justify-center items-center text-center rounded w-36 h-28 ${
           activeTab === "view"
             ? "bg-cyan-700 shadow-xl text-white font-bold"
             : "bg-white shadow"
@@ -30,7 +30,7 @@ const Tabs = ({ activeTab, onTabChange }) => {
       </Box>
 
       <Box
-        className={`py-2 px-4 text-sm gap-2 flex flex-col justify-center items-center rounded w-36 h-28  ${
+        className={`py-2 px-4 text-sm gap-2 flex flex-col justify-center items-center text-center rounded w-36 h-28  ${
           activeTab === "add"
             ? "bg-cyan-700 shadow-xl text-white font-bold"
             : "bg-white shadow"
