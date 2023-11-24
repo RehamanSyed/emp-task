@@ -28,7 +28,14 @@ The Employment Management System allows users to perform CRUD (Create, Read, Upd
 ## Getting Started
 
 1. Clone the repository:
+
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/RehamanSyed/emp-task.git>
+
    cd employment-management-system
+
+   npm install
+
+   npm run dev
+
    ```
