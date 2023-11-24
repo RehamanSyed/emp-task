@@ -1,0 +1,12 @@
+            
+            
+Done --->   · View employee page will show the profile image in Avatar
+Done --->   · In edit employee tab, able to upload profile image
+Done --->   · employee details will be (name, salary, age, profile image).
+Done --->   . Create an Next.js application of employee management with 3 tabs add employee, edit employee and view employee list.
+Done --->   · In Edit employee we can change data of any employee.
+Done --->   · In Add employee page create a from to add employee details.
+Done --->   · In edit employee tab for salary input, only allows positive number without decimal      
+Done --->   · In view employee tab, to show truncated name if name character length is more than 25. 
+Done --->   · In any tab, if we reload page then it will open same tab instead of going to first tab
+Done --->   · View employee page will contain list of all employees which I can edit or delete. 
