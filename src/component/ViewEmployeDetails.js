@@ -33,9 +33,7 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
       >
         <Image
           src={
-            empdata.profile_image
-              ? `/uploads/${empdata.profile_image}`
-              : fallbackimg
+            empdata.profile_image ? `/${empdata.profile_image}` : fallbackimg
           }
           width={150}
           height={250}

@@ -37,7 +37,7 @@ const EmployeeLists = ({
                       <Image
                         src={
                           item.profile_image
-                            ? `/uploads/${item.profile_image}`
+                            ? `/${item.profile_image}`
                             : fallbackimg
                         }
                         width={50}

@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       }
       const imageBuffer = req.file.buffer;
       const fileName = `${req.file.originalname}`;
-      const filePath = path.join("src", "uploads", fileName);
+      const filePath = path.join("public", fileName);
 
       // Save the image buffer to the server
       fs.writeFileSync(filePath, imageBuffer);

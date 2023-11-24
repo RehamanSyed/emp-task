@@ -89,7 +89,7 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
             <Image
               src={
                 empdata.profile_image
-                  ? `/uploads/${empdata.profile_image}`
+                  ? `/${empdata.profile_image}`
                   : fallbackimg
               }
               width={150}
