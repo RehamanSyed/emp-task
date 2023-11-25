@@ -2,7 +2,6 @@ export async function uploadFileToFolder(data) {
   try {
     const formData = new FormData();
     formData.append("profile_image", data.profile_image[0]);
-
     const response = await fetch("/api/upload", {
       method: "POST",
       body: formData,

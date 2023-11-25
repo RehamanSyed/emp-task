@@ -6,10 +6,13 @@ import { uploadFileToFolder } from "@/utils/uploadFile";
 import { useEmpStore } from "../../store";
 
 const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
+  const [selectedImage, setSelectedImage] = useState();
+  const [selectedFile, setSelectedFile] = useState();
   const [error, setError] = useState(false);
   const {
     control,
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -43,6 +46,7 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
       addEmployee(convertedData);
       dialogeOpenHandler();
       setOpenAddDia(true);
+      reset();
     } catch (error) {
       setError(true);
       console.error("Error uploading image:", error);
@@ -52,23 +56,26 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3}>
-          {error && error && (
-            <Alert severity="error">Please upload Image</Alert>
-          )}
-          <label>
-            <input
-              type="file"
-              {...register("profile_image", {
-                required: "Image is required",
-              })}
-            />
-          </label>
-          {errors.profile_image && (
-            <p className="text-red-500 text-xs">
-              {errors.profile_image.message}
-            </p>
-          )}
+          <Stack spacing={2}>
+            {error && error && (
+              <Alert severity="error">Something went worng</Alert>
+            )}
 
+            <label>
+              <input
+                type="file"
+                {...register("profile_image", {
+                  required: "Image is required",
+                })}
+              />
+            </label>
+
+            {errors.profile_image && (
+              <p className="text-red-500 text-xs">
+                {errors.profile_image.message}
+              </p>
+            )}
+          </Stack>
           <Stack spacing={2}>
             <Controller
               name="employee_name"
