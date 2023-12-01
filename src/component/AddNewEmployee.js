@@ -1,13 +1,11 @@
-import { Alert, Box, Button, Stack, TextField } from "@mui/material";
+import { Alert, Button, Stack, TextField } from "@mui/material";
 import React, { useState } from "react";
-
 import { useForm, Controller } from "react-hook-form";
 import { uploadFileToFolder } from "@/utils/uploadFile";
 import { useEmpStore } from "../../store";
+import { dialogeOpenHandler } from "@/utils/allHandlerFunctions";
 
-const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
-  const [selectedImage, setSelectedImage] = useState();
-  const [selectedFile, setSelectedFile] = useState();
+const AddNewEmployee = ({ setOpenAddDia, setOpenDialogue, setEmpId }) => {
   const [error, setError] = useState(false);
   const {
     control,
@@ -28,12 +26,15 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
 
   const onSubmit = async (data) => {
     try {
+      // Upload image Function
       const responseData = await uploadFileToFolder(data);
 
-      console.log("Response data ******", responseData);
       if (!responseData.success) {
         setError(true);
+        return;
       }
+
+      // Extract file information and update  form data
       const fileKey = Object.keys(data.profile_image)[0];
       const fileName = data.profile_image[fileKey].name;
       const convertedData = {
@@ -43,8 +44,11 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
         employee_salary: +data.employee_salary,
       };
 
+      // Add the employee with the updated data
       addEmployee(convertedData);
-      dialogeOpenHandler();
+
+      // Open the dialog and reset the form
+      dialogeOpenHandler(data.id, setEmpId, setOpenDialogue);
       setOpenAddDia(true);
       reset();
     } catch (error) {
@@ -53,12 +57,14 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
     }
   };
   return (
-    <div>
+    <div className="w-[50%]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={3}>
           <Stack spacing={2}>
             {error && error && (
-              <Alert severity="error">Something went worng</Alert>
+              <Alert severity="error" onClose={() => {}}>
+                Something went worng
+              </Alert>
             )}
 
             <label>
@@ -155,7 +161,6 @@ const AddNewEmployee = ({ dialogeOpenHandler, setOpenAddDia }) => {
               )}
             />
           </Stack>
-
           <Button
             aria-label="add employee"
             variant="contained"

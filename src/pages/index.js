@@ -13,106 +13,72 @@ import ViewEmployeDetails from "@/component/ViewEmployeDetails";
 import errorImage from "../../public/server.png";
 import Image from "next/image";
 import { useEmpStore } from "../../store";
+import {
+  confirmDeleteHandler,
+  dialogeCloseHandler,
+  modalCloseHandler,
+} from "@/utils/allHandlerFunctions";
 
-// export async function getStaticProps() {
-//   try {
-//     const response = await fetch(
-//       "https://dummy.restapiexample.com/api/v1/employees"
-//     );
+export async function getStaticProps() {
+  try {
+    const res = await fetch(
+      "https://dummy.restapiexample.com/api/v1/employees"
+    );
+    if (res.status === 429) {
+      throw new Error("Too Many Requests. Please try again later.");
+    }
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.status}`);
+    }
+    const data = await res.json();
+    return {
+      props: {
+        employeesList: data.data,
+        error: null,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching data:", error);
 
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch data. Status: ${response.status}`);
-//     }
-//     const data = await response.json();
-//     return {
-//       props: { data: empList },
-//     };
-//   } catch (error) {
-//     console.error("Error fetching data", error.message);
+    return {
+      props: {
+        employeesList: [],
+        error: error.message,
+      },
+    };
+  }
+}
 
-//     if (error.response && error.response.status === 429) {
-//       return {
-//         props: {
-//           data: null,
-//           statusCode: 429,
-//           error: "Too Many Request",
-//         },
-//       };
-//     }
-//     if (error.response && error.response.status === 500) {
-//       return {
-//         props: {
-//           data: null,
-//           statusCode: 500,
-//           error: "Internal Server Error",
-//         },
-//       };
-//     }
-//     return {
-//       props: {
-//         data: null,
-//         statusCode: 500,
-//         error: "something went worng ",
-//       },
-//     };
-//   }
-// }
-
-export default function Home({ data }) {
+export default function Home({ employeesList, error }) {
   const storedActiveTab =
     typeof window !== "undefined" ? localStorage.getItem("activeTab") : null;
   const [activeTab, setActiveTab] = useState(storedActiveTab || "view");
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
-  const [error, setError] = useState(false);
-  const [value, setValue] = useState(0);
   const [empId, setEmpId] = useState();
   const [openaddDia, setOpenAddDia] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openDialogue, setOpenDialogue] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const allEmployeList = useEmpStore((state) => state.allEmployeList);
-  const editEmployeeData = useEmpStore((state) => state.editEmployee);
-  const deleteEmployeeData = useEmpStore((state) => state.deleteEmployee);
 
-  const dialogeOpenHandler = (id) => {
-    console.log("dialoge Open  Handler", id);
-    setOpen(true);
-    setEmpId(id);
-  };
-  const dialogeCloseHandler = () => {
-    console.log("dialoge Close Handler");
-    setOpen(false);
-  };
-  const confirmDeleteHandler = () => {
-    console.log("confirm Delete Handler");
-    deleteEmployeeData(empId);
-    setOpen(false);
-    setIsLoading(false);
-  };
-  const modalCloseHandler = () => {
-    setOpenModal(false);
-  };
-  const modalOpenHandler = (id) => {
-    setOpenModal(true);
-    setEmpId(id);
-    editEmployeeData(id);
-  };
+  const allEmployeList = useEmpStore((state) => state.allEmployeList);
+  const deleteEmployeeData = useEmpStore((state) => state.deleteEmployee);
 
   useEffect(() => {
     localStorage.setItem("empData", JSON.stringify(empList));
-    allEmployeList();
-  }, [isLoading]);
-
-  useEffect(() => {
     return () => {
-      localStorage.removeItem("activeTab");
+      if (typeof window === "undefined") {
+        localStorage.removeItem("activeTab");
+      }
     };
   }, []);
 
-  return error && error ? (
-    <div className="w-[50%] mx-auto  min-h-[500px] flex justify-center">
+  useEffect(() => {
+    allEmployeList();
+  }, [isLoading]);
+
+  return !error && employeesList.length !== 0 ? (
+    <div className="w-[50%] mx-auto min-h-[500px] flex justify-center">
       <div className="flex flex-col justify-center items-center text-center gap-3 p-10">
         <Image
           src={errorImage}
@@ -122,7 +88,7 @@ export default function Home({ data }) {
           className="grayscale"
         />
         <h1 className="text-5xl text-gray-500 font-extrabold">429</h1>
-        <h1>Too Many request</h1>
+        <h1>{error}</h1>
         <Button
           aria-label="error"
           variant="contained"
@@ -133,87 +99,87 @@ export default function Home({ data }) {
           }}
           onClick={() => router.reload()}
         >
-          send request again
+          Refresh Page
         </Button>
       </div>
     </div>
   ) : (
     <>
-      <div className="p-5">
+      <div className="p-10">
         <Tabs activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab)} />
         {activeTab === "add" && (
           <AddNewEmployee
-            dialogeOpenHandler={dialogeOpenHandler}
             setOpenAddDia={setOpenAddDia}
+            setEmpId={setEmpId}
+            setOpenDialogue={setOpenDialogue}
           />
         )}
         {activeTab === "view" && (
           <EmployeeLists
             setEditMode={setEditMode}
-            modalOpenHandler={modalOpenHandler}
-            dialogeOpenHandler={dialogeOpenHandler}
             setOpenAddDia={setOpenAddDia}
+            setOpenModal={setOpenModal}
+            setEmpId={setEmpId}
+            setOpenDialogue={setOpenDialogue}
           />
         )}
       </div>
 
-      <Dialog
-        open={open}
-        onClose={dialogeCloseHandler}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        {openaddDia ? (
-          <DialogContent sx={{ p: 6, textAlign: "center" }}>
-            <CheckCircle fontSize={"large"} color="success" />
-            <div className="my-5">
-              <h1 className="text-2xl font-bold">Succcessfully added</h1>
-              <p className="">You have successfully added a new resource</p>
-            </div>
-            <div className="flex justify-center gap-3 mt-10">
+      <Dialog open={openDialogue}>
+        <DialogContent sx={{ p: 6, textAlign: "center" }}>
+          <CheckCircle fontSize={"large"} color="success" />
+          <div className="my-5">
+            <h1 className="text-2xl font-bold">
+              {openaddDia ? "Succcessfully added." : "Are you Sure?"}
+            </h1>
+            <p className="">
+              {openaddDia
+                ? "You have successfully added a new resource."
+                : "Do you really want to delete this record."}
+            </p>
+          </div>
+          <div className="flex justify-center gap-3 mt-10">
+            <Button
+              onClick={() => dialogeCloseHandler(setOpenDialogue)}
+              variant="outlined"
+              color="error"
+              sx={{
+                textTransform: "capitalize",
+              }}
+            >
+              Close
+            </Button>
+
+            {!openaddDia && (
               <Button
-                onClick={dialogeCloseHandler}
-                autoFocus
-                sx={{ background: "primary !important" }}
-                color="error"
-                variant="outlined"
-              >
-                Close
-              </Button>
-            </div>
-          </DialogContent>
-        ) : (
-          <DialogContent sx={{ p: 6, textAlign: "center" }}>
-            <CancelOutlinedIcon fontSize={"large"} color="error" />
-            <div className="my-5">
-              <h1 className="text-2xl font-bold">Are you Sure ?</h1>
-              <p className="">Do you really want to delete this record</p>
-            </div>
-            <div className="flex justify-center gap-3 mt-10">
-              <Button onClick={dialogeCloseHandler}>Close</Button>
-              <Button
-                onClick={() => confirmDeleteHandler(empId)}
-                autoFocus
-                sx={{ background: "primary !important" }}
-                color="error"
+                onClick={() =>
+                  confirmDeleteHandler(
+                    empId,
+                    setOpenDialogue,
+                    deleteEmployeeData,
+                    setIsLoading
+                  )
+                }
+                sx={{ border: "1px solid #0e7490", color: "#0e7490" }}
                 variant="outlined"
               >
                 Confirm
               </Button>
-            </div>
-          </DialogContent>
-        )}
+            )}
+          </div>
+        </DialogContent>
       </Dialog>
-      <Modal open={openModal} onClose={modalCloseHandler}>
+
+      <Modal open={openModal}>
         <Box sx={modalStyle}>
           {editMode ? (
             <EditEmployeeDetails
-              modalCloseHandler={modalCloseHandler}
+              modalCloseHandler={() => modalCloseHandler(setOpenModal)}
               setOpenModal={setOpenModal}
             />
           ) : (
             <ViewEmployeDetails
-              modalCloseHandler={modalCloseHandler}
+              modalCloseHandler={() => modalCloseHandler(setOpenModal)}
               setOpenModal={setOpenModal}
             />
           )}

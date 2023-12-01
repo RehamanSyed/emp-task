@@ -1,21 +1,16 @@
 import React from "react";
-import Header from "../shared/Header";
-import Footer from "../shared/Footer";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 const MainLayout = ({ children }) => {
   return (
-    <main className={`min-h-screen  bg-blue-50 ${inter}`}>
-      <div className="flex justify-start py-28 gap-4 flex-col items-start min-h-[350px] bg-slate-400 bg-gradient-to-r from-[#23899d] from-10%  to-[#37a766] to-100%">
-        <div className="container-lg mx-auto w-[90%] xl:w-[50%] md:w-[80%] rounded-xl">
+    <main className={`min-h-screen bg-gray-50`}>
+      <div className="py-28 gap-4 min-h-[350px] bg-slate-400 bg-gradient-to-r from-[#23899d] from-10%  to-[#37a766] to-100%">
+        <div className="container-lg mx-auto w-[90%] xl:w-[60%] md:w-[80%]">
           <h1 className="text-4xl text-white font-extrabold">Hello Admin</h1>
-          <h3 className="text-lg text-white font-medium">
+          <p className="text-lg text-white font-medium">
             Welcome to Employe Management System
-          </h3>
+          </p>
         </div>
       </div>
-      <div className="container-lg mx-auto w-[90%]  md:w-[80%] xl:w-[60%] bg-white -mt-12 rounded-xl">
+      <div className="container-lg mx-auto w-[90%]  md:w-[80%] xl:w-[60%] bg-white -mt-20 rounded-xl">
         {children}
       </div>
     </main>

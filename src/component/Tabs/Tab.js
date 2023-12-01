@@ -26,7 +26,7 @@ const Tabs = ({ activeTab, onTabChange }) => {
         ) : (
           <Image src={group} width={48} height={48} alt={"tab imgs"} />
         )}
-        View Employee
+        <h1>View Employee</h1>
       </Box>
 
       <Box
@@ -47,7 +47,7 @@ const Tabs = ({ activeTab, onTabChange }) => {
         ) : (
           <Image src={incorporation} width={48} height={48} alt={"tab imgs"} />
         )}
-        Add Employee
+        <h1>Add Employee</h1>
       </Box>
     </Box>
   );

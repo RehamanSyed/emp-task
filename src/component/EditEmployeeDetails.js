@@ -1,15 +1,5 @@
-import {
-  Alert,
-  Box,
-  Button,
-  IconButton,
-  Input,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
-
+import React from "react";
+import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import fallbackimg from "../../public/avatarpic.jpg";
 import Image from "next/image";
@@ -19,6 +9,8 @@ import { useEmpStore } from "../../store";
 
 const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
   const empdata = useEmpStore((state) => state.singleEmpData);
+  const saveEmpdata = useEmpStore((state) => state.saveEmployeData);
+
   const {
     control,
     handleSubmit,
@@ -34,33 +26,42 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
     },
   });
 
-  const saveEmpdata = useEmpStore((state) => state.saveEmployeData);
-
   const onSubmit = async (data) => {
     try {
-      const responseData = await uploadFileToFolder(data);
-      console.log("Resonspe Data", responseData);
+      if (data.profile_image) {
+        // Upload image Function
+        const responseData = await uploadFileToFolder(data);
+        if (!responseData.success) {
+          setError(true);
+          return;
+        }
 
-      if (!responseData.success) {
-        setError(true);
+        // Extract file information and update  form data
+        const fileKey = Object.keys(data.profile_image)[0];
+        const fileName = data.profile_image[fileKey].name;
+
+        const convertedFormData = {
+          ...data,
+          profile_image: fileName,
+          employee_age: +data.employee_age,
+          employee_salary: +data.employee_salary,
+        };
+
+        // Save employee in localstorage
+        saveEmpdata(convertedFormData);
+
+        // close Modal
+        modalCloseHandler(setOpenModal);
+      } else {
+        saveEmpdata(data);
+        modalCloseHandler(setOpenModal);
       }
-      const fileKey = Object.keys(data.profile_image)[0];
-      const fileName = data.profile_image[fileKey].name;
-
-      const convertedData = {
-        ...data,
-        profile_image: fileName,
-        employee_age: +data.employee_age,
-        employee_salary: +data.employee_salary,
-      };
-      console.log(convertedData);
-      saveEmpdata(convertedData);
-      modalCloseHandler();
     } catch (error) {
-      // setError(true);
+      setError(true);
       console.error("Error uploading image:", error);
     }
   };
+
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -210,7 +211,6 @@ const EditEmployeeDetails = ({ modalCloseHandler, setOpenModal }) => {
             <Stack direction="row" spacing={2} px={4}>
               <Button
                 type="submit"
-                aria-label="add employee"
                 variant="contained"
                 sx={{
                   bgcolor: "#0e7490 !important",

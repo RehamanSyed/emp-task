@@ -15,6 +15,6 @@ export async function uploadFileToFolder(data) {
     return responseData;
   } catch (error) {
     console.error("Error uploading file:", error.message);
-    throw error; // Re-throw the error to let the calling code handle it
+    throw error;
   }
 }

@@ -1,10 +1,8 @@
-import { Box, IconButton, Stack, TextField, Typography } from "@mui/material";
-import React from "react";
-
 import Image from "next/image";
-import fallbackimg from "../../public/avatarpic.jpg";
+import { Box, IconButton, Stack, TextField } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useEmpStore } from "../../store";
+import fallbackimg from "../../public/avatarpic.jpg";
 
 const ViewEmployeDetails = ({ setOpenModal }) => {
   const empdata = useEmpStore((state) => state.singleEmpData);
@@ -47,7 +45,10 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
             defaultValue={empdata.id}
             name="id"
             fullWidth
-            id="outlined-basic"
+            InputProps={{
+              readOnly: true,
+            }}
+            sx={{ backgroundColor: "#f2f2f2" }}
             label="Employee Id"
             variant="outlined"
           />
@@ -55,7 +56,10 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
             name="employee_name"
             defaultValue={empdata.employee_name}
             fullWidth
-            id="outlined-basic"
+            InputProps={{
+              readOnly: true,
+            }}
+            sx={{ backgroundColor: "#f2f2f2" }}
             label="Employee Name"
             variant="outlined"
           />
@@ -66,7 +70,10 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
             name="employee_age"
             defaultValue={empdata.employee_age}
             fullWidth
-            id="outlined-basic"
+            sx={{ backgroundColor: "#f2f2f2" }}
+            InputProps={{
+              readOnly: true,
+            }}
             label="Age"
             variant="outlined"
           />
@@ -74,7 +81,10 @@ const ViewEmployeDetails = ({ setOpenModal }) => {
             name="employee_salary"
             defaultValue={empdata.employee_salary}
             fullWidth
-            id="outlined-basic"
+            sx={{ backgroundColor: "#f2f2f2" }}
+            InputProps={{
+              readOnly: true,
+            }}
             label="Salary"
             variant="outlined"
           />

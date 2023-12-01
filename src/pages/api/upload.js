@@ -17,14 +17,11 @@ export default async function handler(req, res) {
       if (err) {
         return res.status(400).json({ message: "Failed to upload image" });
       }
-
       const imageBuffer = req.file.buffer;
       const fileName = req.file.originalname;
       const filePath = path.join(process.cwd(), "public", fileName);
-
       // Save the image buffer to the server asynchronously
       await fs.writeFile(filePath, imageBuffer);
-
       return res.status(200).json({
         success: true,
         message: "File uploaded successfully",

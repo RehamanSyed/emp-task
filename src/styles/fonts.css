@@ -1,0 +1,38 @@
+/* styles/fonts.css */
+
+@font-face {
+  font-family: "ManropeRegular";
+  src: url("/fonts/Manrope-Regular.ttf") format("ttf");
+  font-weight: 500;
+  font-style: regular;
+}
+@font-face {
+  font-family: "ManropeBold";
+  src: url("/fonts/Manrope-Bold.ttf") format("ttf");
+  font-weight: 700;
+  font-style: bold;
+}
+@font-face {
+  font-family: "ManropeLight";
+  src: url("/fonts/Manrope-Light.ttf") format("ttf");
+
+  font-weight: 300;
+  font-style: thin;
+}
+
+body {
+  font-family: "ManropeRegular", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "ManropeBold", sans-serif;
+  font-weight: 700;
+}
+p {
+  font-family: "ManropeLight", sans-serif;
+  font-weight: 300;
+}
