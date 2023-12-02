@@ -29,10 +29,14 @@ export const useEmpStore = create((set) => ({
   // Function to add a new employee
   addEmployee: (data) => {
     const existingData = getLocalStorageData();
+
+    existingData.unshift();
     const updatedEmpData = [
-      ...existingData,
       { ...data, id: existingData.length + 1 },
+      ...existingData,
+      ,
     ];
+
     localStorage.setItem("empData", JSON.stringify(updatedEmpData));
     set(() => ({ empList: updatedEmpData }));
   },

@@ -40,11 +40,11 @@ const EmployeeLists = ({
             return (
               <tr
                 key={idx}
-                className="hover:bg-gray-100 transition duration-300 ease-in-out "
+                className="hover:bg-gray-100 transition duration-300 ease-in-out text-sm "
               >
-                <td className="border px-2 py-1">{idx + 1}</td>
-                <td className="border px-2 py-1 text-center">{`#00${item.id}`}</td>
-                <td className="border px-2 py-1">
+                <td className="border px-2 text-center">{idx + 1}</td>
+                <td className="border px-2 text-center">{`#00${item.id}`}</td>
+                <td className="border px-2 ">
                   <Image
                     src={
                       item.profile_image
@@ -56,15 +56,15 @@ const EmployeeLists = ({
                     alt="profile image"
                   />
                 </td>
-                <td className="border px-2 py-1">
+                <td className="border px-2">
                   {item?.employee_name?.length > 25
                     ? item?.employee_name.substring(0, 24) + "..."
                     : item?.employee_name}
                 </td>
-                <td className="border px-2 py-1 text-center">
+                <td className="border px-2 text-center">
                   {item?.employee_age}
                 </td>
-                <td className="border px-2 py-1 text-center">
+                <td className="border px-2 text-center">
                   {item?.employee_salary}
                 </td>
 

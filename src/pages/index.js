@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { Box, Button, Modal, Dialog, DialogContent } from "@mui/material";
 import { useRouter } from "next/router";
 import { empList } from "@/utils/empData";
-import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import { CheckCircle } from "@mui/icons-material";
 import Tabs from "@/component/Tabs/Tab";
 import EditEmployeeDetails from "@/component/EditEmployeeDetails";
 import AddNewEmployee from "@/component/AddNewEmployee";
 import EmployeeLists from "@/component/EmployeeLists";
 import ViewEmployeDetails from "@/component/ViewEmployeDetails";
-
 import errorImage from "../../public/server.png";
 import Image from "next/image";
 import { useEmpStore } from "../../store";
@@ -65,7 +63,7 @@ export default function Home({ employeesList, error }) {
   const deleteEmployeeData = useEmpStore((state) => state.deleteEmployee);
 
   useEffect(() => {
-    localStorage.setItem("empData", JSON.stringify(empList));
+    localStorage.setItem("empData", JSON.stringify(employeesList));
     return () => {
       if (typeof window === "undefined") {
         localStorage.removeItem("activeTab");
@@ -77,7 +75,7 @@ export default function Home({ employeesList, error }) {
     allEmployeList();
   }, [isLoading]);
 
-  return !error && employeesList.length !== 0 ? (
+  return error && employeesList.length === 0 ? (
     <div className="w-[50%] mx-auto min-h-[500px] flex justify-center">
       <div className="flex flex-col justify-center items-center text-center gap-3 p-10">
         <Image
