@@ -103,7 +103,7 @@ export default function Home({ employeesList, error }) {
     </div>
   ) : (
     <>
-      <div className="p-10">
+      <div className="p-4 md:p-6 lg:p-8 xl:p-10">
         <Tabs activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab)} />
         {activeTab === "add" && (
           <AddNewEmployee

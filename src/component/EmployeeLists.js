@@ -23,7 +23,7 @@ const EmployeeLists = ({
 
   return (
     <div className="relative overflow-auto">
-      <table className="w-full  min-h-[350px] ">
+      <table className="w-full min-h-[350px] ">
         <thead className="bg-gray-50">
           <tr>
             <th className="border px-2 py-3 w-20">Sno</th>
